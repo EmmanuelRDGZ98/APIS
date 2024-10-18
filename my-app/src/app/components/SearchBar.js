@@ -18,10 +18,16 @@ const SearchBar = ({ onSearch, placeholder, apiOptions = [] }) => {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={placeholder}
             />
+            <select value={api} onChange={(e) => setApi(e.target.value)}>
+                {apiOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                        {option.label}
+                    </option>
+                ))}
+            </select>
             <button type="submit">Search</button>
         </form>
     );
 };
 
 export default SearchBar;
-

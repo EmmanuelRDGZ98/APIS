@@ -1,46 +1,55 @@
 "use client";
-import { useState } from "react";
-import SearchBar from "../components/SearchBar";
+import { useState, useEffect } from "react";
 
-const PokeAPI = () => {
-    const [results, setResults] = useState(null);
+function Pokemon() {
+    const [pokemonName, setPokemonName] = useState(""); // Estado para el nombre del Pokémon buscado
+    const [pokemonData, setPokemonData] = useState(null); // Estado para almacenar los datos del Pokémon
+    const [error, setError] = useState(null); // Estado para manejar errores en la búsqueda
 
-    const fetchPokemon = async (pokemonName) => {
-        const response = await fetch(
-            `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
-        );
-        if (response.ok) {
-            const data = await response.json();
-            setResults(data);
-        } else {
-            setResults(null); // Reinicia si no encuentra resultados
-        }
-    };
+    // Función para buscar el Pokémon
+    const handleSearch = () => {
+        if (!pokemonName) return; // No buscar si el nombre está vacío
 
-    const handleSearch = (query) => {
-        fetchPokemon(query);
+        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Pokemon no encontrado");
+                }
+                return response.json();
+            })
+            .then(data => {
+                setPokemonData(data);
+                setError(null); // Limpiar el estado de error si la búsqueda es exitosa
+            })
+            .catch(err => {
+                setPokemonData(null);
+                setError("Intenta de nuevo");
+            });
     };
 
     return (
         <div>
-            <h1>PokeAPI Search</h1>
-            <SearchBar
-                onSearch={handleSearch}
-                placeholder="Search Pokémon..."
+            <h1>Buscador de pokemones</h1>
+            <input
+                type="text"
+                value={pokemonName}
+                onChange={(e) => setPokemonName(e.target.value)}
+                placeholder="Pon tu pokemon favorito"
             />
-            {results ? (
+            <button onClick={handleSearch}>Buscar</button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            {pokemonData ? (
                 <div>
-                    <h3>{results.name}</h3>
-                    <img src={results.sprites.front_default} alt={results.name} />
-                    <p>Height: {results.height} decimeters</p>
-                    <p>Weight: {results.weight} hectograms</p>
-                    <p>Base Experience: {results.base_experience}</p>
+                    <h2>{pokemonData.name}</h2>
+                    <img src={pokemonData.sprites.front_default} alt={pokemonData.name} />
+                    <p>Altura: {pokemonData.height}</p>
+                    <p>Peso: {pokemonData.weight}</p>
                 </div>
             ) : (
-                <p>No results found.</p>
+                <p>Buscar para una pokemon</p>
             )}
         </div>
     );
-};
+}
 
-export default PokeAPI;
+export default Pokemon;

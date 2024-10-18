@@ -21,10 +21,10 @@ function navbar() {
             }}
         >
             <ButtonGroup color="primary" variant="text" aria-label="Basic button group" size="large">
-                <Link href='../clima'><Button>Star wars</Button></Link>
+                <Link href='../maps'><Button>Mapas</Button></Link>
                 <Link href='../login'><Button>Login</Button></Link>
                 <Link href='../pokemon'><Button>Pokemon</Button></Link>
-                <Link href='../rick'><Button>Rick&Morty</Button></Link>
+                <Link href='../perritos'><Button>Perritos</Button></Link>
                 <Button>Logout</Button>
             </ButtonGroup>
         </Box>
