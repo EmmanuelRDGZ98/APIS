@@ -2,17 +2,17 @@
 import { useState } from "react";
 
 function Dogs() {
-    const [dogBreed, setDogBreed] = useState(""); // Almacena la raza del perro ingresada por el usuario
-    const [dogImage, setDogImage] = useState(null); // Almacena la URL de la imagen del perro
-    const [error, setError] = useState(null); // Almacena un mensaje de error si no se encuentra la imagen
+    const [dogBreed, setDogBreed] = useState(""); 
+    const [dogImage, setDogImage] = useState(null); 
+    const [error, setError] = useState(null); 
 
     const handleSearch = () => {
-        if (!dogBreed) return; // No buscar si la raza está vacía
+        if (!dogBreed) return; 
 
-        // Formatea la raza para la API
+        
         const formattedBreed = dogBreed.toLowerCase().replace(" ", "-");
 
-        // Realiza la búsqueda de imágenes en la API Dogs
+        
         fetch(`https://dog.ceo/api/breed/${formattedBreed}/images/random`)
             .then((response) => response.json())
             .then((data) => {
@@ -20,7 +20,7 @@ function Dogs() {
                     setError("Intenta de nuevo");
                     setDogImage(null);
                 } else {
-                    setDogImage(data.message); // Obtiene la URL de la imagen
+                    setDogImage(data.message);
                     setError(null);
                 }
             })

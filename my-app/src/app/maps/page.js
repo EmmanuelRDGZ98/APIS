@@ -2,25 +2,25 @@
 import { useState } from "react";
 
 function RandomUser() {
-    const [userData, setUserData] = useState(null); // Almacena los datos del usuario
-    const [error, setError] = useState(null); // Almacena un mensaje de error si no se encuentra el usuario
+    const [userData, setUserData] = useState(null);
+    const [error, setError] = useState(null);
 
     const fetchRandomUser = () => {
-        // Realiza la solicitud a la API de Random User
+    
         fetch(`https://randomuser.me/api/`)
             .then((response) => response.json())
             .then((data) => {
                 if (!data.results || data.results.length === 0) {
-                    setError("No user data found. Please try again.");
+                    setError("Intenta de nuevo");
                     setUserData(null);
                 } else {
-                    // Obtiene el primer usuario de la respuesta
+                    
                     setUserData(data.results[0]);
                     setError(null);
                 }
             })
             .catch(() => {
-                setError("An error occurred while fetching the user data.");
+                setError("Un errorcito");
                 setUserData(null);
             });
     };

@@ -2,13 +2,13 @@
 import { useState, useEffect } from "react";
 
 function Pokemon() {
-    const [pokemonName, setPokemonName] = useState(""); // Estado para el nombre del Pokémon buscado
-    const [pokemonData, setPokemonData] = useState(null); // Estado para almacenar los datos del Pokémon
-    const [error, setError] = useState(null); // Estado para manejar errores en la búsqueda
+    const [pokemonName, setPokemonName] = useState("");
+    const [pokemonData, setPokemonData] = useState(null);
+    const [error, setError] = useState(null); 
 
-    // Función para buscar el Pokémon
+    
     const handleSearch = () => {
-        if (!pokemonName) return; // No buscar si el nombre está vacío
+        if (!pokemonName) return;
 
         fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`)
             .then(response => {
@@ -19,7 +19,7 @@ function Pokemon() {
             })
             .then(data => {
                 setPokemonData(data);
-                setError(null); // Limpiar el estado de error si la búsqueda es exitosa
+                setError(null); 
             })
             .catch(err => {
                 setPokemonData(null);
